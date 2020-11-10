@@ -3,6 +3,8 @@ package com.web.assgiment.dormitory.common.validator.group;
 public class RegexContant {
 
     public static final String USERNAME_REGEX= "[a-zA-Z0-9]";
+    public static final String STUDENT_CODE_REGEX= "^[A-Z]";
+    public static final String NUMBER_CODE_REGEX= "^[0-9]";
 
     public static final String CODE_REGEX = "([A-Z0-9_]+)$";
 

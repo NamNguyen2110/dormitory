@@ -3,6 +3,7 @@ package com.web.assgiment.dormitory.controller;
 import com.web.assgiment.dormitory.common.respond.ResponseData;
 import com.web.assgiment.dormitory.dto.PageDto;
 import com.web.assgiment.dormitory.dto.RoomDto;
+import com.web.assgiment.dormitory.exception.BadRequestException;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.service.RoomService;
 import com.web.assgiment.dormitory.utils.MessageBundle;
@@ -21,7 +22,7 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping("")
-    public ResponseEntity<ResponseData> getAllRoom(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
+    public ResponseEntity<ResponseData> getAllRooms(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
                                                    @RequestParam(value = "limit", defaultValue = "10") Integer limit) throws UserValidateException {
         PageDto pageDto = new PageDto(offset, limit);
         Map<String, Object> map = roomService.getAllRoom(pageDto);
@@ -29,7 +30,7 @@ public class RoomController {
     }
 
     @PostMapping("/create-room")
-    public ResponseEntity<ResponseData> createOneRoom(@RequestBody RoomDto roomDto) throws UserValidateException {
+    public ResponseEntity<ResponseData> createOneRoom(@RequestBody RoomDto roomDto) throws UserValidateException, BadRequestException {
         RoomDto newRoomDto = roomService.saveRoom(roomDto);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.create"), newRoomDto));
     }

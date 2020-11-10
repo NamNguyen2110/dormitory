@@ -1,10 +1,11 @@
 package com.web.assgiment.dormitory.service.impl;
 
 import com.web.assgiment.dormitory.common.utils.CommonUtils;
+import com.web.assgiment.dormitory.common.validator.group.RegexContant;
 import com.web.assgiment.dormitory.domain.Room;
-import com.web.assgiment.dormitory.dto.ListId;
 import com.web.assgiment.dormitory.dto.PageDto;
 import com.web.assgiment.dormitory.dto.RoomDto;
+import com.web.assgiment.dormitory.exception.BadRequestException;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.mapper.ObjectMapperUtils;
 import com.web.assgiment.dormitory.repository.RoomRepository;
@@ -26,7 +27,7 @@ public class RoomServiceImpl implements RoomService {
     private RoomRepository roomRepository;
 
     @Override
-    public RoomDto saveRoom(RoomDto roomDto) throws UserValidateException {
+    public RoomDto saveRoom(RoomDto roomDto) throws UserValidateException, BadRequestException {
         if (CommonUtils.isNull(roomDto)) {
             throw new UserValidateException(MessageBundle.getMessage("common.validate.required"));
         }
@@ -44,7 +45,7 @@ public class RoomServiceImpl implements RoomService {
         }
         Pageable pageable = PageRequest.of(pageDto.getOffset(), pageDto.getLimit(), Sort.by("roomCode"));
         Page<Room> roomPage = roomRepository.getAllRoom(pageable);
-        customizePagnation(roomPage);
+        customizePagination(roomPage);
         return resultPage;
     }
 
@@ -97,22 +98,22 @@ public class RoomServiceImpl implements RoomService {
     public Map<String, Object> filterByRoomCode(PageDto pageDto, String roomCode) {
         Pageable pageable = PageRequest.of(pageDto.getOffset(), pageDto.getLimit(), Sort.by("roomCode"));
         Page<Room> roomPage = roomRepository.filterByCode(pageable, roomCode);
-        customizePagnation(roomPage);
+        customizePagination(roomPage);
         return resultPage;
     }
 
-    private void customizePagnation(Page<Room> roomPage) {
-        List<Room> roomList = roomPage.getContent();
+    private void customizePagination(Page<Room> page) {
+        List<Room> roomList = page.getContent();
         List<RoomDto> dtos = ObjectMapperUtils.toDto(roomList, RoomDto.class);
         resultPage.put("data", dtos);
-        resultPage.put("totalPage", roomPage.getSize());
-        resultPage.put("currentPage", roomPage.getNumber());
-        resultPage.put("totalItems", roomPage.getTotalElements());
-        resultPage.put("totalPages", roomPage.getTotalPages());
+        resultPage.put("totalPage", page.getSize());
+        resultPage.put("currentPage", page.getNumber());
+        resultPage.put("totalItems", page.getTotalElements());
+        resultPage.put("totalPages", page.getTotalPages());
     }
 
-    private Room validateRoomData(RoomDto roomDto) throws UserValidateException {
-        if (!roomDto.getRoomCode().startsWith("PTIT_")) {
+    private Room validateRoomData(RoomDto roomDto) throws UserValidateException, BadRequestException {
+        if (roomDto.getRoomCode().matches("^[PTIT_]")) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.code.room"));
         }
         if (roomDto.getQuantity() <= 0) {
@@ -120,6 +121,10 @@ public class RoomServiceImpl implements RoomService {
         }
         if (roomRepository.existsByRoomCode(roomDto.getRoomCode())) {
             throw new UserValidateException((MessageBundle.getMessage("dormitory.message.object.roomCode.room")));
+        }
+        if (roomDto.getQuantity().toString().matches(RegexContant.NUMBER_CODE_REGEX)
+                && roomDto.getStatus().toString().matches(RegexContant.NUMBER_CODE_REGEX)) {
+            throw new BadRequestException(MessageBundle.getMessage("dormitory.message.system.number"));
         }
         Room room = ObjectMapperUtils.toEntity(roomDto, Room.class);
         return room;

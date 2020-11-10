@@ -1,21 +1,29 @@
 package com.web.assgiment.dormitory.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name = "student")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "stu_code")
-    private String studentId;
+    private String studentCode;
     @Column(name = "card_id")
     private String cardId;
-    @Column(name = "dateOfBirth")
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
     @Column(name = "grade")
     private String grade;

@@ -33,6 +33,10 @@ public class Room implements Serializable {
     @JsonIgnore
     private Set<Student> studentSet;
 
+    public Room(Integer id) {
+        this.id = id;
+    }
+
     private static enum ERoomType {
         GROUP,
         SINGLE,
