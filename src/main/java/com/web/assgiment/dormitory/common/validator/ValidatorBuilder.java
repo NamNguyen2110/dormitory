@@ -3,7 +3,8 @@ package com.web.assgiment.dormitory.common.validator;
 
 
 
-import com.assignment.shoppingpetbe.common.validator.factory.ValidatorFactory;
+
+import com.web.assgiment.dormitory.common.validator.factory.ValidatorFactory;
 
 import java.util.ArrayList;
 import java.util.List;
