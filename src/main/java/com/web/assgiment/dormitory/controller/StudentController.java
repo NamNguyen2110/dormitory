@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,7 +23,7 @@ public class StudentController {
 
     @GetMapping("")
     public ResponseEntity<ResponseData> getAllStudents(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
-                                                   @RequestParam(value = "limit", defaultValue = "10") Integer limit) throws UserValidateException {
+                                                       @RequestParam(value = "limit", defaultValue = "10") Integer limit) throws UserValidateException {
         PageDto pageDto = new PageDto(offset, limit);
         Map<String, Object> map = studentService.getAllStudent(pageDto);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"), map));
@@ -33,4 +34,27 @@ public class StudentController {
         StudentRespondDto newStudent = studentService.saveStudent(studentDto);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.create"), newStudent));
     }
+
+    @PutMapping("/delete-student")
+    public ResponseEntity<ResponseData> deleteStudent(@RequestBody List<Integer> id) throws UserValidateException {
+        List<StudentRespondDto> dtos = studentService.deleteStudent(id);
+        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.delete"), dtos));
+    }
+
+    @PutMapping("/update-student")
+    public ResponseEntity<ResponseData> updateStudent(@RequestBody StudentDto studentDto) throws ParseException, UserValidateException {
+        StudentRespondDto dto = studentService.updateStudent(studentDto);
+        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.update"), dto));
+    }
+
+    @GetMapping("/search-room")
+    public ResponseEntity<ResponseData> searchStudentByCode(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
+                                                            @RequestParam(value = "limit", defaultValue = "10") Integer limit,
+                                                            @RequestParam("q") String studentCode) throws UserValidateException {
+        PageDto pageDto = new PageDto(offset, limit);
+        Map<String, Object> map = studentService.searchByStudentCode(pageDto, studentCode);
+        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.search", map)));
+    }
+
+
 }

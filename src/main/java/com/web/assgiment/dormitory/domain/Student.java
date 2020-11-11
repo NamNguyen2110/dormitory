@@ -1,5 +1,6 @@
 package com.web.assgiment.dormitory.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,5 +37,6 @@ public class Student implements Serializable {
     private Set<Visitor> visitorSet;
     @ManyToOne(targetEntity = Room.class)
     @JoinColumn(name = "room_id")
+    @JsonIgnore
     private Room room;
 }
