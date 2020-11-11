@@ -15,8 +15,6 @@ public class Service implements Serializable {
     private String serviceName;
     @Column(name = "amount")
     private double amount;
-    @Column(name = "used_time")
-    private String usedTime;
     @Column(name = "status")
     private Integer status;
 }

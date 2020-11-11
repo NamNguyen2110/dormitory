@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface StudentRepository extends JpaRepository<Student, Integer> {
     @Query("SELECT s FROM Student s WHERE s.studentCode LIKE CONCAT('%',:studentCode,'%') AND s.status = 1")
-    Page<Room> filterByCode(Pageable pageable, @Param("studentCode") String studentCode);
+    Page<Student> filterByCode(Pageable pageable, @Param("studentCode") String studentCode);
 
     @Query("SELECT s FROM Student s WHERE s.status = 1")
     Page<Student> getAllStudent(Pageable pageable);

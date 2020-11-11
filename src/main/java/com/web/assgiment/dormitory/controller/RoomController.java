@@ -3,6 +3,7 @@ package com.web.assgiment.dormitory.controller;
 import com.web.assgiment.dormitory.common.respond.ResponseData;
 import com.web.assgiment.dormitory.dto.PageDto;
 import com.web.assgiment.dormitory.dto.RoomDto;
+import com.web.assgiment.dormitory.dto.respond.RoomRespondDto;
 import com.web.assgiment.dormitory.exception.BadRequestException;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.service.RoomService;
@@ -23,26 +24,26 @@ public class RoomController {
 
     @GetMapping("")
     public ResponseEntity<ResponseData> getAllRooms(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
-                                                   @RequestParam(value = "limit", defaultValue = "10") Integer limit) throws UserValidateException {
+                                                    @RequestParam(value = "limit", defaultValue = "10") Integer limit) throws UserValidateException {
         PageDto pageDto = new PageDto(offset, limit);
         Map<String, Object> map = roomService.getAllRoom(pageDto);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"), map));
     }
 
     @PostMapping("/create-room")
-    public ResponseEntity<ResponseData> createOneRoom(@RequestBody RoomDto roomDto) throws UserValidateException, BadRequestException {
+    public ResponseEntity<ResponseData> createOneRoom(@RequestBody RoomRespondDto roomDto) throws UserValidateException, BadRequestException {
         RoomDto newRoomDto = roomService.saveRoom(roomDto);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.create"), newRoomDto));
     }
 
     @PutMapping("/delete-room")
-    public ResponseEntity<ResponseData> deleteRoom(@RequestBody List<RoomDto> dtos) throws UserValidateException {
-        List<RoomDto> dtoList = roomService.deleteRoom(dtos);
+    public ResponseEntity<ResponseData> deleteRoom(@RequestBody List<Integer> id) throws UserValidateException {
+        List<RoomDto> dtoList = roomService.deleteRoom(id);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.delete"), dtoList));
     }
 
     @PutMapping("/update-room")
-    public ResponseEntity<ResponseData> updateRoom(@RequestBody RoomDto roomDto) throws UserValidateException {
+    public ResponseEntity<ResponseData> updateRoom(@RequestBody RoomDto roomDto) throws UserValidateException, BadRequestException {
         RoomDto updateRoom = roomService.updateOneRoom(roomDto);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.update"), updateRoom));
     }
