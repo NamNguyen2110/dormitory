@@ -129,13 +129,13 @@ public class StudentServiceImpl implements StudentService {
 
     private Student checkPattern(StudentDto studentDto) throws UserValidateException, ParseException {
         if (!studentDto.getStudentCode().matches(RegexContant.STUDENT_CODE_REGEX)) {
-            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.code.validate"));
+            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.code.pattern"));
         }
         if (!studentDto.getGrade().matches(RegexContant.GRADE_CODE_REGEX)) {
-            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.class.validate"));
+            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.class.pattern"));
         }
         if (!studentDto.getDateOfBirth().matches(RegexContant.DATE_OF_BIRTH)) {
-            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.dateOfBirth.validate"));
+            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.dateOfBirth.pattern"));
         }
         if (!studentDto.getCardId().matches(RegexContant.CARD_CODE_REGEX)) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.cardId.pattern"));

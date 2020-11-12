@@ -1,11 +1,18 @@
 package com.web.assgiment.dormitory.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "service")
-public class Service implements Serializable {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Business implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -53,7 +53,7 @@ public class StudentController {
                                                             @RequestParam("q") String studentCode) throws UserValidateException {
         PageDto pageDto = new PageDto(offset, limit);
         Map<String, Object> map = studentService.searchByStudentCode(pageDto, studentCode);
-        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.search", map)));
+        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.search"),map));
     }
 
 
