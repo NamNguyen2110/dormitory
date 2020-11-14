@@ -2,7 +2,8 @@ package com.web.assgiment.dormitory.service;
 
 import com.web.assgiment.dormitory.domain.dto.BusinessDto;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
-import com.web.assgiment.dormitory.domain.dto.respond.BusinessRespondDto;
+import com.web.assgiment.dormitory.domain.dto.request.BusinessRespondDto;
+import com.web.assgiment.dormitory.domain.dto.request.UsedDto;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 
 import java.util.*;
@@ -16,5 +17,9 @@ public interface BusinessService {
 
     BusinessDto updateService(BusinessDto businessDto) throws UserValidateException;
 
-    Map<String, Object> filterByName(PageDto pageDto,String serviceName);
+    Map<String, Object> filterByName(PageDto pageDto, String serviceName);
+
+    void registerService(UsedDto usedDto) throws UserValidateException;
+
+    void checkOutService(Integer usedServiceId) throws UserValidateException;
 }

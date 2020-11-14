@@ -2,7 +2,7 @@ package com.web.assgiment.dormitory.service;
 
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.RoomDto;
-import com.web.assgiment.dormitory.domain.dto.respond.RoomRespondDto;
+import com.web.assgiment.dormitory.domain.dto.request.RoomRespondDto;
 import com.web.assgiment.dormitory.exception.BadRequestException;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 

@@ -6,7 +6,7 @@ import com.web.assgiment.dormitory.domain.entity.Room;
 import com.web.assgiment.dormitory.domain.entity.Student;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.StudentDto;
-import com.web.assgiment.dormitory.domain.dto.respond.StudentRespondDto;
+import com.web.assgiment.dormitory.domain.dto.request.StudentRespondDto;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.mapper.ObjectMapperUtils;
 import com.web.assgiment.dormitory.repository.RoomRepository;
@@ -21,7 +21,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,6 +40,7 @@ public class StudentServiceImpl implements StudentService {
     private RoomRepository roomRepository;
 
     @Override
+    @Transactional(rollbackFor = {SQLException.class})
     public StudentDto saveStudent(StudentRespondDto studentDto) throws UserValidateException, ParseException {
         Optional<Room> optional = roomRepository.findById(studentDto.getRoomId());
         if (optional.isEmpty()) {

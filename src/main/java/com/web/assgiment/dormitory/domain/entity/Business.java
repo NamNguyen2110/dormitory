@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "service")
@@ -25,4 +26,7 @@ public class Business implements Serializable {
     private double amount;
     @Column(name = "status")
     private Integer status;
+    @OneToMany(targetEntity = Used.class, cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, mappedBy = "business")
+    private Set<Used> usedSet;
 }
