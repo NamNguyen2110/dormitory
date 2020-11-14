@@ -1,4 +1,4 @@
-package com.web.assgiment.dormitory.domain;
+package com.web.assgiment.dormitory.domain.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Visitor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
     @Column(name = "card_id")
     private String cartId;
