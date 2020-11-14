@@ -1,6 +1,6 @@
 package com.web.assgiment.dormitory.repository;
 
-import com.web.assgiment.dormitory.domain.Room;
+import com.web.assgiment.dormitory.domain.entity.Room;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

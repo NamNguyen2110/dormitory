@@ -1,4 +1,4 @@
-package com.web.assgiment.dormitory.dto.respond;
+package com.web.assgiment.dormitory.domain.dto.respond;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentRespondDto {
-    private Integer id;
+    private Integer roomId;
     private String studentCode;
     private String cardId;
     private String dateOfBirth;

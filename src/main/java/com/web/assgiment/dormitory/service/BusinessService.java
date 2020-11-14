@@ -1,8 +1,8 @@
 package com.web.assgiment.dormitory.service;
 
-import com.web.assgiment.dormitory.dto.BusinessDto;
-import com.web.assgiment.dormitory.dto.PageDto;
-import com.web.assgiment.dormitory.dto.respond.BusinessRespondDto;
+import com.web.assgiment.dormitory.domain.dto.BusinessDto;
+import com.web.assgiment.dormitory.domain.dto.PageDto;
+import com.web.assgiment.dormitory.domain.dto.respond.BusinessRespondDto;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 
 import java.util.*;

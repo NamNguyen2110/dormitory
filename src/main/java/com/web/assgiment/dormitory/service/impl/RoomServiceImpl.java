@@ -1,15 +1,10 @@
 package com.web.assgiment.dormitory.service.impl;
 
-import com.web.assgiment.dormitory.common.respond.ResponseData;
-import com.web.assgiment.dormitory.common.utils.CommonUtils;
-import com.web.assgiment.dormitory.common.validator.ValidateObject;
-import com.web.assgiment.dormitory.common.validator.ValidatorBuilder;
-import com.web.assgiment.dormitory.common.validator.ValidatorGroup;
 import com.web.assgiment.dormitory.common.validator.group.RegexContant;
-import com.web.assgiment.dormitory.domain.Room;
-import com.web.assgiment.dormitory.dto.PageDto;
-import com.web.assgiment.dormitory.dto.RoomDto;
-import com.web.assgiment.dormitory.dto.respond.RoomRespondDto;
+import com.web.assgiment.dormitory.domain.entity.Room;
+import com.web.assgiment.dormitory.domain.dto.PageDto;
+import com.web.assgiment.dormitory.domain.dto.RoomDto;
+import com.web.assgiment.dormitory.domain.dto.respond.RoomRespondDto;
 import com.web.assgiment.dormitory.exception.BadRequestException;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.mapper.ObjectMapperUtils;
@@ -72,7 +67,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomDto updateOneRoom(RoomDto roomDto) throws UserValidateException, BadRequestException {
-        Optional<Room> optional = roomRepository.findById(roomDto.getId());
+        Optional<Room> optional = roomRepository.findById(roomDto.getRoomId());
         if (optional.isEmpty()) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
         }

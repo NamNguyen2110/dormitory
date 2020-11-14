@@ -2,12 +2,10 @@ package com.web.assgiment.dormitory.service.impl;
 
 import com.web.assgiment.dormitory.common.utils.CommonUtils;
 import com.web.assgiment.dormitory.common.validator.group.RegexContant;
-import com.web.assgiment.dormitory.domain.Business;
-import com.web.assgiment.dormitory.domain.Student;
-import com.web.assgiment.dormitory.dto.BusinessDto;
-import com.web.assgiment.dormitory.dto.PageDto;
-import com.web.assgiment.dormitory.dto.respond.BusinessRespondDto;
-import com.web.assgiment.dormitory.dto.respond.StudentRespondDto;
+import com.web.assgiment.dormitory.domain.entity.Business;
+import com.web.assgiment.dormitory.domain.dto.BusinessDto;
+import com.web.assgiment.dormitory.domain.dto.PageDto;
+import com.web.assgiment.dormitory.domain.dto.respond.BusinessRespondDto;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.mapper.ObjectMapperUtils;
 import com.web.assgiment.dormitory.repository.BussinessRepository;
@@ -69,7 +67,7 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     public BusinessDto updateService(BusinessDto businessDto) throws UserValidateException {
-        Optional<Business> optional = bussinessRepository.findById(businessDto.getId());
+        Optional<Business> optional = bussinessRepository.findById(businessDto.getServiceId());
         if (optional.isEmpty()) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
         }

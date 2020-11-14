@@ -1,4 +1,4 @@
-package com.web.assgiment.dormitory.domain;
+package com.web.assgiment.dormitory.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,8 @@ import java.io.Serializable;
 public class Business implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id")
+    private Integer serviceId;
     @Column(name = "service_code")
     private String serviceCode;
     @Column(name = "name")

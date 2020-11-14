@@ -1,4 +1,4 @@
-package com.web.assgiment.dormitory.domain;
+package com.web.assgiment.dormitory.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -19,7 +18,8 @@ import java.util.Set;
 public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id")
+    private Integer studentId;
     @Column(name = "stu_code")
     private String studentCode;
     @Column(name = "card_id")
@@ -39,4 +39,7 @@ public class Student implements Serializable {
     @JoinColumn(name = "room_id")
     @JsonIgnore
     private Room room;
+    @OneToMany(targetEntity = Ticket.class, cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, mappedBy = "student")
+    private Set<Ticket> ticketSet;
 }
