@@ -12,7 +12,7 @@ import java.util.Date;
 @RestController
 @RequestMapping("/")
 public class TestController {
-        @GetMapping
+    @GetMapping
     public String test() {
         return "Hello world";
     }

@@ -45,4 +45,6 @@ public class Student implements Serializable {
     @OneToMany(targetEntity = Used.class, cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, mappedBy = "student")
     private Set<Used> usedSet;
+    @OneToOne(mappedBy = "student")
+    private Bill bill;
 }
