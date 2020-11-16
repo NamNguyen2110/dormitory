@@ -1,11 +1,13 @@
 package com.web.assgiment.dormitory.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "bill")
@@ -19,7 +21,9 @@ public class Bill implements Serializable {
     private double totalBill;
     private double totalService;
     private double totalRoom;
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = Student.class)
+    private Date exportDate;
+    @ManyToOne(targetEntity = Student.class)
     @JoinColumn(name = "student_id")
+    @JsonIgnore
     private Student student;
 }
