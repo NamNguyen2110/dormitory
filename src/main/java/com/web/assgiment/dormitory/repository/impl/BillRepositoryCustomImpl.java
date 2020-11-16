@@ -2,8 +2,6 @@ package com.web.assgiment.dormitory.repository.impl;
 
 import com.web.assgiment.dormitory.domain.dto.BillDto;
 import com.web.assgiment.dormitory.domain.dto.request.BillExportDto;
-import com.web.assgiment.dormitory.domain.entity.Bill;
-import com.web.assgiment.dormitory.domain.entity.Student;
 import com.web.assgiment.dormitory.repository.BillRepositoryCustom;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+
 
 @Repository("billRepositoryCustom")
 public class BillRepositoryCustomImpl implements BillRepositoryCustom {

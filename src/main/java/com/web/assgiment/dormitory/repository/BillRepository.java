@@ -1,7 +1,6 @@
 package com.web.assgiment.dormitory.repository;
 
 import com.web.assgiment.dormitory.domain.entity.Bill;
-import com.web.assgiment.dormitory.domain.entity.Business;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

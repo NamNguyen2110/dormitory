@@ -42,5 +42,6 @@ public class StatisticController {
     public ResponseEntity<ResponseData> getAllBill() throws UserValidateException {
         List<BillDto> billList = billService.getAllBill();
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"), billList));
+
     }
 }

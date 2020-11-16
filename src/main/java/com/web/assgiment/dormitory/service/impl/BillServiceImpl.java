@@ -2,7 +2,6 @@ package com.web.assgiment.dormitory.service.impl;
 
 import com.web.assgiment.dormitory.common.validator.group.RegexContant;
 import com.web.assgiment.dormitory.domain.dto.BillDto;
-import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.request.BillExportDto;
 import com.web.assgiment.dormitory.domain.entity.Bill;
 import com.web.assgiment.dormitory.domain.entity.Student;
@@ -14,8 +13,6 @@ import com.web.assgiment.dormitory.service.BillService;
 import com.web.assgiment.dormitory.utils.MessageBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -63,4 +60,5 @@ public class BillServiceImpl implements BillService {
         resultPage.put("currentItem", page.getTotalElements());
         resultPage.put("totalPages", page.getTotalPages());
     }
+
 }
