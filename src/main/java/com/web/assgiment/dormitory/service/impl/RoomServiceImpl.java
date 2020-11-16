@@ -4,7 +4,7 @@ import com.web.assgiment.dormitory.common.validator.group.RegexContant;
 import com.web.assgiment.dormitory.domain.entity.Room;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.RoomDto;
-import com.web.assgiment.dormitory.domain.dto.respond.RoomRespondDto;
+import com.web.assgiment.dormitory.domain.dto.request.RoomRespondDto;
 import com.web.assgiment.dormitory.exception.BadRequestException;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.mapper.ObjectMapperUtils;
@@ -17,7 +17,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.*;
 
 @Service("roomService")
@@ -27,6 +29,7 @@ public class RoomServiceImpl implements RoomService {
     private RoomRepository roomRepository;
 
     @Override
+    @Transactional(rollbackFor = {SQLException.class})
     public RoomDto saveRoom(RoomRespondDto roomDto) throws UserValidateException, BadRequestException {
         Room newRoom = validateRoomData(roomDto);
         newRoom.setStatus(1);

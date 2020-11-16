@@ -10,25 +10,18 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "student_service")
+@Table(name = "bill")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Used implements Serializable {
+public class Bill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
-    @Column(name = "start_used")
-    private Date startUsed;
-    @Column(name = "end_used")
-    private Date endUsed;
-    @Column(name = "status")
-    private Integer status;
-    @ManyToOne(targetEntity = Business.class)
-    @JoinColumn(name = "service_id")
-    @JsonIgnore
-    private Business business;
+    private double totalBill;
+    private double totalService;
+    private double totalRoom;
+    private Date exportDate;
     @ManyToOne(targetEntity = Student.class)
     @JoinColumn(name = "student_id")
     @JsonIgnore

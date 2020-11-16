@@ -2,13 +2,18 @@ package com.web.assgiment.dormitory.service.impl;
 
 import com.web.assgiment.dormitory.common.utils.CommonUtils;
 import com.web.assgiment.dormitory.common.validator.group.RegexContant;
+import com.web.assgiment.dormitory.domain.dto.request.UsedDto;
 import com.web.assgiment.dormitory.domain.entity.Business;
 import com.web.assgiment.dormitory.domain.dto.BusinessDto;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
-import com.web.assgiment.dormitory.domain.dto.respond.BusinessRespondDto;
+import com.web.assgiment.dormitory.domain.dto.request.BusinessRespondDto;
+import com.web.assgiment.dormitory.domain.entity.Student;
+import com.web.assgiment.dormitory.domain.entity.Used;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.mapper.ObjectMapperUtils;
 import com.web.assgiment.dormitory.repository.BussinessRepository;
+import com.web.assgiment.dormitory.repository.StudentRepository;
+import com.web.assgiment.dormitory.repository.UsedRepository;
 import com.web.assgiment.dormitory.service.BusinessService;
 import com.web.assgiment.dormitory.utils.MessageBundle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +22,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.*;
 
 @Service("businessService")
@@ -25,8 +32,13 @@ public class BusinessServiceImpl implements BusinessService {
     private final Map<String, Object> resultPage = new HashMap<>();
     @Autowired
     private BussinessRepository bussinessRepository;
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
+    private UsedRepository usedRepository;
 
     @Override
+    @Transactional(rollbackFor = {SQLException.class})
     public BusinessDto saveService(BusinessRespondDto dto) throws UserValidateException {
         checkNullOrEmpty(dto);
         checkExist(dto);
@@ -91,6 +103,37 @@ public class BusinessServiceImpl implements BusinessService {
         Page<Business> businessPage = bussinessRepository.filterByName(pageable, serviceName);
         customizePagination(businessPage);
         return resultPage;
+    }
+
+    @Override
+    @Transactional(rollbackFor = {SQLException.class})
+    public void registerService(UsedDto usedDto) throws UserValidateException {
+        Optional<Student> optionalStudent = studentRepository.findById(usedDto.getStudentId());
+        Optional<Business> optionalBusiness = bussinessRepository.findById(usedDto.getServiceId());
+        if (optionalStudent.isEmpty()) {
+            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
+        }
+        if (optionalBusiness.isEmpty()) {
+            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
+        }
+        Used used = new Used();
+        used.setStudent(optionalStudent.get());
+        used.setBusiness(optionalBusiness.get());
+        used.setStartUsed(new Date());
+        used.setStatus(1);
+        usedRepository.save(used);
+    }
+
+    @Override
+    @Transactional(rollbackFor = {SQLException.class})
+    public void checkOutService(Integer usedServiceId) throws UserValidateException {
+        Optional<Used> optionalUsed = usedRepository.findById(usedServiceId);
+        if (optionalUsed.isEmpty()) {
+            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
+        }
+        optionalUsed.get().setEndUsed(new Date());
+        optionalUsed.get().setStatus(0);
+        usedRepository.save(optionalUsed.get());
     }
 
     private void checkExist(BusinessRespondDto dto) throws UserValidateException {

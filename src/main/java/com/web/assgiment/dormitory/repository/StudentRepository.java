@@ -8,10 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface StudentRepository extends JpaRepository<Student, Integer> {
-    @Query("SELECT DISTINCT s FROM Student s WHERE s.studentCode LIKE CONCAT('%',:studentCode,'%') AND s.status = 1")
+    @Query("SELECT DISTINCT s FROM Student s WHERE s.studentCode LIKE CONCAT('%',:studentCode,'%')")
     Page<Student> filterByCode(Pageable pageable, @Param("studentCode") String studentCode);
 
-    @Query("SELECT DISTINCT s FROM Student s WHERE s.status = 1")
+    @Query("SELECT DISTINCT s FROM Student s")
     Page<Student> getAllStudent(Pageable pageable);
 
     boolean existsByStudentCode(String studentCode);

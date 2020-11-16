@@ -2,7 +2,6 @@ package com.web.assgiment.dormitory.service.impl;
 
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.TicketDto;
-import com.web.assgiment.dormitory.domain.dto.respond.StudentRespondDto;
 import com.web.assgiment.dormitory.domain.entity.Student;
 import com.web.assgiment.dormitory.domain.entity.Ticket;
 import com.web.assgiment.dormitory.exception.UserValidateException;
@@ -16,7 +15,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.*;
 
 @Service("ticketService")
@@ -28,6 +29,7 @@ public class TicketServiceImpl implements TicketService {
     private StudentRepository studentRepository;
 
     @Override
+    @Transactional(rollbackFor = {SQLException.class})
     public void saveTicketCheckIn(Integer studentId) throws UserValidateException {
         Optional<Student> optional = studentRepository.findById(studentId);
         if (optional.isEmpty()) {
@@ -73,6 +75,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    @Transactional(rollbackFor = {SQLException.class})
     public void registerTicketMonthly(Integer studentId) throws UserValidateException {
         Optional<Student> optional = studentRepository.findById(studentId);
         if (optional.isEmpty()) {

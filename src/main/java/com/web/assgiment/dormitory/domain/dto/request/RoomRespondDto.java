@@ -1,4 +1,4 @@
-package com.web.assgiment.dormitory.domain.dto.respond;
+package com.web.assgiment.dormitory.domain.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

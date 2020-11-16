@@ -3,7 +3,8 @@ package com.web.assgiment.dormitory.controller;
 import com.web.assgiment.dormitory.common.respond.ResponseData;
 import com.web.assgiment.dormitory.domain.dto.BusinessDto;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
-import com.web.assgiment.dormitory.domain.dto.respond.BusinessRespondDto;
+import com.web.assgiment.dormitory.domain.dto.request.BusinessRespondDto;
+import com.web.assgiment.dormitory.domain.dto.request.UsedDto;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.service.BusinessService;
 import com.web.assgiment.dormitory.utils.MessageBundle;
@@ -25,7 +26,7 @@ public class BusinessController {
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.create"), businessDto));
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<ResponseData> getAllService(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
                                                       @RequestParam(value = "limit", defaultValue = "10") Integer limit) {
         PageDto pageDto = new PageDto(offset, limit);
@@ -52,5 +53,16 @@ public class BusinessController {
         PageDto pageDto = new PageDto(offset, limit);
         Map<String, Object> map = businessService.filterByName(pageDto, serviceCode);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.search"), map));
+    }
+
+    @PostMapping("/register-service")
+    public ResponseEntity<ResponseData> registerService(@RequestBody UsedDto usedDto) throws UserValidateException {
+        businessService.registerService(usedDto);
+        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.create")));
+    }
+    @PutMapping("/checkout-service")
+    public ResponseEntity<ResponseData> checkOutService(@RequestParam("usedServiceId") Integer id) throws UserValidateException {
+        businessService.checkOutService(id);
+        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.update")));
     }
 }

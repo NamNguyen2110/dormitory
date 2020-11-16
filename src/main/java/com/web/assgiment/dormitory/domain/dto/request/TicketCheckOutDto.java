@@ -1,4 +1,4 @@
-package com.web.assgiment.dormitory.domain.dto.respond;
+package com.web.assgiment.dormitory.domain.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -14,6 +14,5 @@ public class TicketCheckOutDto {
     private Integer id;
     private double charges;
     private Date checkOut;
-    @JsonIgnore
     private Integer status;
 }

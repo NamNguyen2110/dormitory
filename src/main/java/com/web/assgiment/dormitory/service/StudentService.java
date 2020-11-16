@@ -2,7 +2,7 @@ package com.web.assgiment.dormitory.service;
 
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.StudentDto;
-import com.web.assgiment.dormitory.domain.dto.respond.StudentRespondDto;
+import com.web.assgiment.dormitory.domain.dto.request.StudentRespondDto;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 
 import java.text.ParseException;

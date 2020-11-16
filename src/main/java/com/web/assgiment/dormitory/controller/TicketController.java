@@ -3,8 +3,6 @@ package com.web.assgiment.dormitory.controller;
 import com.web.assgiment.dormitory.common.respond.ResponseData;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.TicketDto;
-import com.web.assgiment.dormitory.domain.dto.respond.TicketCheckInDto;
-import com.web.assgiment.dormitory.domain.dto.respond.TicketCheckOutDto;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.service.TicketService;
 import com.web.assgiment.dormitory.utils.MessageBundle;

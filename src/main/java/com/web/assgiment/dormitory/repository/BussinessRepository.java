@@ -8,10 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface BussinessRepository extends JpaRepository<Business, Integer> {
-    @Query("SELECT DISTINCT b FROM Business b WHERE b.serviceName LIKE CONCAT('%',:serviceName,'%') AND b.status = 1")
+    @Query("SELECT DISTINCT b FROM Business b WHERE b.serviceName LIKE CONCAT('%',:serviceName,'%')")
     Page<Business> filterByName(Pageable pageable, @Param("serviceName") String serviceName);
 
-    @Query("SELECT DISTINCT b FROM Business b WHERE b.status = 1")
+    @Query("SELECT DISTINCT b FROM Business b")
     Page<Business> getAllService(Pageable pageable);
 
     boolean existsByServiceName(String serviceName);

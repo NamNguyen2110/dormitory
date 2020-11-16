@@ -42,4 +42,10 @@ public class Student implements Serializable {
     @OneToMany(targetEntity = Ticket.class, cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, mappedBy = "student")
     private Set<Ticket> ticketSet;
+    @OneToMany(targetEntity = Used.class, cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, mappedBy = "student")
+    private Set<Used> usedSet;
+    @OneToMany(targetEntity = Bill.class, cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, mappedBy = "student")
+    private Set<Bill> billSet;
 }
