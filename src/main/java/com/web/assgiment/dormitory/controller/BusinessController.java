@@ -8,6 +8,7 @@ import com.web.assgiment.dormitory.domain.dto.request.UsedDto;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.service.BusinessService;
 import com.web.assgiment.dormitory.utils.MessageBundle;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping(value = "v1/api/service")
+@ApiOperation("This api means service cause naming for service duplicate,so set service by BusinessController actually ServiceController")
 public class BusinessController {
     @Autowired
     private BusinessService businessService;

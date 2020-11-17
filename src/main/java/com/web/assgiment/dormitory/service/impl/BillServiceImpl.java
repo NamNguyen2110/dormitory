@@ -3,6 +3,8 @@ package com.web.assgiment.dormitory.service.impl;
 import com.web.assgiment.dormitory.common.validator.group.RegexContant;
 import com.web.assgiment.dormitory.domain.dto.BillDto;
 import com.web.assgiment.dormitory.domain.dto.request.BillExportDto;
+import com.web.assgiment.dormitory.domain.dto.request.BillServiceDto;
+import com.web.assgiment.dormitory.domain.dto.request.BillServiceRequestDto;
 import com.web.assgiment.dormitory.domain.entity.Bill;
 import com.web.assgiment.dormitory.domain.entity.Student;
 import com.web.assgiment.dormitory.exception.UserValidateException;
@@ -38,7 +40,7 @@ public class BillServiceImpl implements BillService {
         if (optional.isEmpty()) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
         }
-        if (!dto.getStartDay().matches(RegexContant.DATE_OF_BIRTH) || !dto.getEndDay().matches(RegexContant.DATE_OF_BIRTH)) {
+        if (!dto.getStartDay().matches(RegexContant.DATETIME) || !dto.getEndDay().matches(RegexContant.DATETIME)) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.dateOfBirth.pattern"));
         }
         Bill bill = new Bill();
@@ -52,6 +54,15 @@ public class BillServiceImpl implements BillService {
         billRepository.save(bill);
     }
 
+    @Override
+    public List<BillServiceDto> getAllService(BillServiceRequestDto dto) throws UserValidateException {
+        if (!dto.getStartDate().matches(RegexContant.DATETIME)
+                || !dto.getEndDate().matches(RegexContant.DATETIME)) {
+            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.datetime.pattern"));
+        }
+        return billRepositoryCustom.getAllService(dto);
+    }
+
     private void customizePagination(Page<Bill> page) {
         List<Bill> businessList = page.getContent();
         resultPage.put("data", businessList);
@@ -60,5 +71,4 @@ public class BillServiceImpl implements BillService {
         resultPage.put("currentItem", page.getTotalElements());
         resultPage.put("totalPages", page.getTotalPages());
     }
-
 }

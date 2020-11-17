@@ -4,6 +4,8 @@ import com.web.assgiment.dormitory.common.respond.ResponseData;
 import com.web.assgiment.dormitory.domain.dto.BillDto;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.request.BillExportDto;
+import com.web.assgiment.dormitory.domain.dto.request.BillServiceDto;
+import com.web.assgiment.dormitory.domain.dto.request.BillServiceRequestDto;
 import com.web.assgiment.dormitory.domain.entity.Bill;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.service.BillService;
@@ -42,6 +44,11 @@ public class StatisticController {
     public ResponseEntity<ResponseData> getAllBill() throws UserValidateException {
         List<BillDto> billList = billService.getAllBill();
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"), billList));
+    }
 
+    @PostMapping("/bill-service")
+    public ResponseEntity<ResponseData> getAllService(@RequestBody BillServiceRequestDto dto) throws UserValidateException {
+        List<BillServiceDto> dtos = billService.getAllService(dto);
+        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"),dtos));
     }
 }

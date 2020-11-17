@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BillExportDto {
-    private String startDay;
-    private String endDay;
-    private Integer studentId;
+public class BillServiceRequestDto {
+    private String startDate;
+    private String endDate;
 }

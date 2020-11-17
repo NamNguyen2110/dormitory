@@ -2,7 +2,12 @@ package com.web.assgiment.dormitory.repository.impl;
 
 import com.web.assgiment.dormitory.domain.dto.BillDto;
 import com.web.assgiment.dormitory.domain.dto.request.BillExportDto;
+import com.web.assgiment.dormitory.domain.dto.request.BillServiceDto;
+import com.web.assgiment.dormitory.domain.dto.request.BillServiceRequestDto;
 import com.web.assgiment.dormitory.repository.BillRepositoryCustom;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -62,5 +67,28 @@ public class BillRepositoryCustomImpl implements BillRepositoryCustom {
             billDtoList.add(billDto);
         }
         return billDtoList;
+    }
+
+    @Override
+    public List<BillServiceDto> getAllService(BillServiceRequestDto dto) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select service_code,name,sum(amount) as total from student_service ss ");
+        sql.append("join service s on ss.service_id=s.id ");
+        sql.append("join student st on ss.student_id = st.id ");
+//        sql.append("group by service_code;");
+        sql.append("where start_used >= :startDate and end_used <= :endDate group by service_code");
+        Query query = entityManager.createNativeQuery(sql.toString());
+        query.setParameter("startDate", dto.getStartDate());
+        query.setParameter("endDate", dto.getEndDate());
+        List<Object[]> list = query.getResultList();
+        List<BillServiceDto> dtos = new ArrayList<>();
+        for (Object[] o : list) {
+            BillServiceDto serviceDto = new BillServiceDto();
+            serviceDto.setServiceCode((String) o[0]);
+            serviceDto.setServiceName((String) o[1]);
+            serviceDto.setTotal((Double) o[2]);
+            dtos.add(serviceDto);
+        }
+        return dtos;
     }
 }
