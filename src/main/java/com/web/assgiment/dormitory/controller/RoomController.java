@@ -1,15 +1,13 @@
 package com.web.assgiment.dormitory.controller;
 
 import com.web.assgiment.dormitory.common.respond.ResponseData;
-import com.web.assgiment.dormitory.dto.PageDto;
-import com.web.assgiment.dormitory.dto.RoomDto;
-import com.web.assgiment.dormitory.dto.respond.RoomRespondDto;
+import com.web.assgiment.dormitory.domain.dto.PageDto;
+import com.web.assgiment.dormitory.domain.dto.RoomDto;
+import com.web.assgiment.dormitory.domain.dto.request.RoomRespondDto;
 import com.web.assgiment.dormitory.exception.BadRequestException;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.service.RoomService;
 import com.web.assgiment.dormitory.utils.MessageBundle;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

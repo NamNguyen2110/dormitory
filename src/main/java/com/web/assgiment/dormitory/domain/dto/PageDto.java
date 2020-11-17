@@ -1,4 +1,4 @@
-package com.web.assgiment.dormitory.dto;
+package com.web.assgiment.dormitory.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
