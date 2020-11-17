@@ -1,4 +1,4 @@
-package com.web.assgiment.dormitory.domain;
+package com.web.assgiment.dormitory.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,8 @@ import java.util.Set;
 public class Room implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id")
+    private Integer roomId;
     @Column(name = "room_code")
     private String roomCode;
     @Column(name = "room_type")
@@ -33,8 +34,8 @@ public class Room implements Serializable {
     @JsonIgnore
     private Set<Student> studentSet;
 
-    public Room(Integer id) {
-        this.id = id;
+    public Room(Integer roomId) {
+        this.roomId = roomId;
     }
 
     private static enum ERoomType {

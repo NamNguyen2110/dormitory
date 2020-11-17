@@ -1,7 +1,6 @@
-package com.web.assgiment.dormitory.dto;
+package com.web.assgiment.dormitory.domain.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.web.assgiment.dormitory.dto.respond.RoomRespondDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoomDto extends RoomRespondDto {
-    private Integer id;
+public class RegisterTicketDto {
+    private Integer studentId;
+    @JsonIgnore
+    private double price;
     @JsonIgnore
     private Integer status;
 }

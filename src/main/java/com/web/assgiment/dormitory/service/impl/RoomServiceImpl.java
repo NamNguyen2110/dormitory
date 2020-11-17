@@ -1,11 +1,10 @@
 package com.web.assgiment.dormitory.service.impl;
 
-import com.web.assgiment.dormitory.common.utils.CommonUtils;
 import com.web.assgiment.dormitory.common.validator.group.RegexContant;
-import com.web.assgiment.dormitory.domain.Room;
-import com.web.assgiment.dormitory.dto.PageDto;
-import com.web.assgiment.dormitory.dto.RoomDto;
-import com.web.assgiment.dormitory.dto.respond.RoomRespondDto;
+import com.web.assgiment.dormitory.domain.entity.Room;
+import com.web.assgiment.dormitory.domain.dto.PageDto;
+import com.web.assgiment.dormitory.domain.dto.RoomDto;
+import com.web.assgiment.dormitory.domain.dto.request.RoomRespondDto;
 import com.web.assgiment.dormitory.exception.BadRequestException;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.mapper.ObjectMapperUtils;
@@ -18,7 +17,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.*;
 
 @Service("roomService")
@@ -28,10 +29,8 @@ public class RoomServiceImpl implements RoomService {
     private RoomRepository roomRepository;
 
     @Override
+    @Transactional(rollbackFor = {SQLException.class})
     public RoomDto saveRoom(RoomRespondDto roomDto) throws UserValidateException, BadRequestException {
-        if (CommonUtils.isNull(roomDto)) {
-            throw new UserValidateException(MessageBundle.getMessage("common.validate.required"));
-        }
         Room newRoom = validateRoomData(roomDto);
         newRoom.setStatus(1);
         roomRepository.save(newRoom);
@@ -71,11 +70,11 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomDto updateOneRoom(RoomDto roomDto) throws UserValidateException, BadRequestException {
-        Optional<Room> optional = roomRepository.findById(roomDto.getId());
+        Optional<Room> optional = roomRepository.findById(roomDto.getRoomId());
         if (optional.isEmpty()) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
         }
-        if (optional.get().getStatus()==0) {
+        if (optional.get().getStatus() == 0) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target.not.exist"));
         }
         validateRoomData(roomDto);
@@ -111,14 +110,32 @@ public class RoomServiceImpl implements RoomService {
         if (!roomDto.getRoomCode().matches(RegexContant.ROOM_CODE_REGEX)) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.code.room"));
         }
-        if (roomDto.getQuantity() <= 0) {
-            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.quantity.room"));
-        }
-        if (roomRepository.existsByRoomCode(roomDto.getRoomCode())) {
-            throw new UserValidateException((MessageBundle.getMessage("dormitory.message.object.roomCode.room")));
+        if (!roomDto.getRoomType().matches(RegexContant.ROOM_TYPE_REGEX)) {
+            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.roomCode.room.type"));
         }
         Room room = ObjectMapperUtils.toEntity(roomDto, Room.class);
         return room;
     }
+
+    private void checkExist(RoomRespondDto roomDto) throws UserValidateException {
+        if (roomRepository.existsByRoomCode(roomDto.getRoomCode())) {
+            throw new UserValidateException((MessageBundle.getMessage("dormitory.message.object.roomCode.room")));
+        }
+        if (roomDto.getQuantity() <= 0) {
+            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.quantity.room"));
+        }
+    }
+//    private ResponseData validateRoomData(RoomDto roomDto) {
+//        ValidatorBuilder validator = new ValidatorBuilder();
+//        validator
+//                .push(new ValidatorGroup().ofFieldName("roomCode")
+//                        .ofValue(roomDto.getRoomCode())
+//                        .ofRequired()
+//                        .ofMaxLength(255)
+//                        .ofRegex(RegexContant.ROOM_CODE_REGEX))
+//                .push(new ValidatorGroup().ofFieldName(""))
+//
+//
+//    }
 
 }

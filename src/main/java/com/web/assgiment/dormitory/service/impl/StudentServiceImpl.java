@@ -2,12 +2,11 @@ package com.web.assgiment.dormitory.service.impl;
 
 import com.web.assgiment.dormitory.common.utils.CommonUtils;
 import com.web.assgiment.dormitory.common.validator.group.RegexContant;
-import com.web.assgiment.dormitory.domain.Room;
-import com.web.assgiment.dormitory.domain.Student;
-import com.web.assgiment.dormitory.dto.PageDto;
-import com.web.assgiment.dormitory.dto.RoomDto;
-import com.web.assgiment.dormitory.dto.StudentDto;
-import com.web.assgiment.dormitory.dto.respond.StudentRespondDto;
+import com.web.assgiment.dormitory.domain.entity.Room;
+import com.web.assgiment.dormitory.domain.entity.Student;
+import com.web.assgiment.dormitory.domain.dto.PageDto;
+import com.web.assgiment.dormitory.domain.dto.StudentDto;
+import com.web.assgiment.dormitory.domain.dto.request.StudentRespondDto;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.mapper.ObjectMapperUtils;
 import com.web.assgiment.dormitory.repository.RoomRepository;
@@ -22,7 +21,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,7 +40,8 @@ public class StudentServiceImpl implements StudentService {
     private RoomRepository roomRepository;
 
     @Override
-    public StudentRespondDto saveStudent(StudentDto studentDto) throws UserValidateException, ParseException {
+    @Transactional(rollbackFor = {SQLException.class})
+    public StudentDto saveStudent(StudentRespondDto studentDto) throws UserValidateException, ParseException {
         Optional<Room> optional = roomRepository.findById(studentDto.getRoomId());
         if (optional.isEmpty()) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
@@ -50,7 +52,7 @@ public class StudentServiceImpl implements StudentService {
         student.setRoom(optional.get());
         student.setStatus(1);
         studentRepository.save(student);
-        StudentRespondDto newStudent = ObjectMapperUtils.toDto(student, StudentRespondDto.class);
+        StudentDto newStudent = ObjectMapperUtils.toDto(student, StudentDto.class);
         return newStudent;
     }
 
@@ -90,7 +92,7 @@ public class StudentServiceImpl implements StudentService {
         if (optionalRoom.isEmpty()) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
         }
-        Optional<Student> optional = studentRepository.findById(studentDto.getId());
+        Optional<Student> optional = studentRepository.findById(studentDto.getStudentId());
         if (optional.isEmpty()) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
         }
@@ -117,9 +119,10 @@ public class StudentServiceImpl implements StudentService {
         return resultPage;
     }
 
+
     private void customizePagination(Page<Student> page) {
         List<Student> roomList = page.getContent();
-        List<StudentRespondDto> dtos = ObjectMapperUtils.toDto(roomList, StudentRespondDto.class);
+        List<StudentDto> dtos = ObjectMapperUtils.toDto(roomList, StudentDto.class);
         resultPage.put("data", dtos);
         resultPage.put("totalItems", page.getSize());
         resultPage.put("currentPage", page.getNumber());
@@ -127,15 +130,15 @@ public class StudentServiceImpl implements StudentService {
         resultPage.put("totalPages", page.getTotalPages());
     }
 
-    private Student checkPattern(StudentDto studentDto) throws UserValidateException, ParseException {
+    private Student checkPattern(StudentRespondDto studentDto) throws UserValidateException, ParseException {
         if (!studentDto.getStudentCode().matches(RegexContant.STUDENT_CODE_REGEX)) {
-            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.code.validate"));
+            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.code.pattern"));
         }
         if (!studentDto.getGrade().matches(RegexContant.GRADE_CODE_REGEX)) {
-            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.class.validate"));
+            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.class.pattern"));
         }
         if (!studentDto.getDateOfBirth().matches(RegexContant.DATE_OF_BIRTH)) {
-            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.dateOfBirth.validate"));
+            throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.dateOfBirth.pattern"));
         }
         if (!studentDto.getCardId().matches(RegexContant.CARD_CODE_REGEX)) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.cardId.pattern"));
@@ -147,7 +150,7 @@ public class StudentServiceImpl implements StudentService {
         return student;
     }
 
-    private void checkNullOrEmpty(StudentDto studentDto) throws UserValidateException {
+    private void checkNullOrEmpty(StudentRespondDto studentDto) throws UserValidateException {
         if (CommonUtils.isNullOrEmpty(studentDto.getStudentCode()) ||
                 CommonUtils.isNullOrEmpty(studentDto.getRoomId().toString()) ||
                 CommonUtils.isNullOrEmpty(studentDto.getStudentCode()) ||
@@ -159,7 +162,7 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
-    private void checkExisted(StudentDto studentDto) throws UserValidateException {
+    private void checkExisted(StudentRespondDto studentDto) throws UserValidateException {
         if (studentRepository.existsByStudentCode(studentDto.getStudentCode())) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.object.student.code"));
         }
