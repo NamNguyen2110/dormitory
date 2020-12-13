@@ -31,15 +31,16 @@ public class StatisticController {
         billService.processBill(dto);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.create")));
     }
+
     @GetMapping("")
-    public ResponseEntity<ResponseData> getAllBill() {
-        List<BillDto> billList = billService.getAllBill();
+    public ResponseEntity<ResponseData> getAllBill(@RequestParam Integer studentId) {
+        List<BillDto> billList = billService.getAllBill(studentId);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"), billList));
     }
 
     @PostMapping("/bill-service")
     public ResponseEntity<ResponseData> getAllService(@RequestBody BillServiceRequestDto dto) throws UserValidateException {
         List<BillServiceDto> dtos = billService.getAllService(dto);
-        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"),dtos));
+        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"), dtos));
     }
 }

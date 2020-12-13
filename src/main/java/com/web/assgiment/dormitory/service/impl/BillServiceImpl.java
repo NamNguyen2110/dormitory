@@ -30,8 +30,8 @@ public class BillServiceImpl implements BillService {
     private StudentRepository studentRepository;
 
     @Override
-    public List<BillDto> getAllBill() {
-        return billRepositoryCustom.getAllBill();
+    public List<BillDto> getAllBill(Integer studentId) {
+        return billRepositoryCustom.getAllBill(studentId);
     }
 
     @Override

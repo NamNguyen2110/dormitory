@@ -50,10 +50,17 @@ public class BillRepositoryCustomImpl implements BillRepositoryCustom {
     }
 
     @Override
-    public List<BillDto> getAllBill() {
+    public List<BillDto> getAllBill(Integer studentId) {
         StringBuilder sql = new StringBuilder();
-        sql.append("select bill.id,stu_code,total_room,total_service,total_bill,export_date from bill join student on bill.id=student.id");
+        sql.append("select bill.id,stu_code,total_room,total_service,total_bill,export_date from bill ");
+        sql.append("join student on bill.student_id=student.id ");
+        if (studentId == null) {
+            sql.append("");
+        } else {
+            sql.append("where student_id = :studentId");
+        }
         Query query = entityManager.createNativeQuery(sql.toString());
+        query.setParameter("studentId", studentId);
         List<Object[]> bills = query.getResultList();
         List<BillDto> billDtoList = new ArrayList<>();
         for (Object[] bill : bills) {

@@ -12,7 +12,7 @@ public interface BillRepositoryCustom {
 
     double serviceChargeByDate(BillExportDto dto);
 
-    List<BillDto> getAllBill();
+    List<BillDto> getAllBill(Integer studentId);
 
     List<BillServiceDto> getAllService(BillServiceRequestDto dto);
 }

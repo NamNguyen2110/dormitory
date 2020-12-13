@@ -9,7 +9,7 @@ import com.web.assgiment.dormitory.exception.UserValidateException;
 import java.util.List;
 
 public interface BillService {
-    List<BillDto> getAllBill();
+    List<BillDto> getAllBill(Integer studentId);
 
     void processBill(BillExportDto dto) throws UserValidateException;
 
