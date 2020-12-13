@@ -5,11 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class BillServiceDto {
-    private String studentCode;
-    private String serviceCode;
-    private String serviceName;
-    private double total;
+@NoArgsConstructor
+public class LoginUserDto {
+    private String username;
+    private String password;
 }

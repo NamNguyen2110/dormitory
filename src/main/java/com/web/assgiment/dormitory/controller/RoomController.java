@@ -7,6 +7,7 @@ import com.web.assgiment.dormitory.domain.dto.request.RoomRespondDto;
 import com.web.assgiment.dormitory.exception.BadRequestException;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.service.RoomService;
+import com.web.assgiment.dormitory.service.impl.RoomServiceImpl;
 import com.web.assgiment.dormitory.utils.MessageBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -54,5 +55,4 @@ public class RoomController {
         Map<String, Object> map = roomService.filterByRoomCode(pageDto, roomCode);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.search"), map));
     }
-
 }

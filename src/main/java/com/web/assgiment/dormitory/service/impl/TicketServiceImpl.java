@@ -86,8 +86,8 @@ public class TicketServiceImpl implements TicketService {
         ticket.setCheckIn(currentDate);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, 1);
-        Date expriedDate = calendar.getTime();
-        ticket.setCheckOut(expriedDate);
+        Date expiredDate = calendar.getTime();
+        ticket.setCheckOut(expiredDate);
         ticket.setCharges(100000);
         ticket.setStatus(1);
         ticket.setStudent(optional.get());

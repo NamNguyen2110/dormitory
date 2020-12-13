@@ -42,7 +42,7 @@ public class TicketController {
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.create")));
     }
     @GetMapping("")
-    public ResponseEntity<ResponseData> getAllStudents(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
+    public ResponseEntity<ResponseData> getAllTickets(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
                                                        @RequestParam(value = "limit", defaultValue = "10") Integer limit) throws UserValidateException {
         PageDto pageDto = new PageDto(offset, limit);
         Map<String, Object> map = ticketService.getAllTicket(pageDto);

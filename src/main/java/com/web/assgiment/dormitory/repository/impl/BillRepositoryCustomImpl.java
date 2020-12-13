@@ -72,10 +72,9 @@ public class BillRepositoryCustomImpl implements BillRepositoryCustom {
     @Override
     public List<BillServiceDto> getAllService(BillServiceRequestDto dto) {
         StringBuilder sql = new StringBuilder();
-        sql.append("select service_code,name,sum(amount) as total from student_service ss ");
+        sql.append("select stu_code,service_code,name,sum(amount) as total from student_service ss ");
         sql.append("join service s on ss.service_id=s.id ");
         sql.append("join student st on ss.student_id = st.id ");
-//        sql.append("group by service_code;");
         sql.append("where start_used >= :startDate and end_used <= :endDate group by service_code");
         Query query = entityManager.createNativeQuery(sql.toString());
         query.setParameter("startDate", dto.getStartDate());
@@ -84,9 +83,10 @@ public class BillRepositoryCustomImpl implements BillRepositoryCustom {
         List<BillServiceDto> dtos = new ArrayList<>();
         for (Object[] o : list) {
             BillServiceDto serviceDto = new BillServiceDto();
-            serviceDto.setServiceCode((String) o[0]);
-            serviceDto.setServiceName((String) o[1]);
-            serviceDto.setTotal((Double) o[2]);
+            serviceDto.setStudentCode((String) o[0]);
+            serviceDto.setServiceCode((String) o[1]);
+            serviceDto.setServiceName((String) o[2]);
+            serviceDto.setTotal((Double) o[3]);
             dtos.add(serviceDto);
         }
         return dtos;
