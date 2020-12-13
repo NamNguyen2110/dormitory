@@ -83,6 +83,7 @@ public class RoomServiceImpl implements RoomService {
         optional.get().setRoomType(room.getRoomType());
         optional.get().setAmount(room.getAmount());
         optional.get().setQuantity(room.getQuantity());
+        optional.get().setStatus(room.getStatus());
         roomRepository.save(optional.get());
         RoomDto updateDto = ObjectMapperUtils.toDto(room, RoomDto.class);
         return updateDto;

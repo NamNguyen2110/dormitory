@@ -105,6 +105,7 @@ public class StudentServiceImpl implements StudentService {
         optional.get().setStudentCode(studentDto.getStudentCode());
         optional.get().setGrade(studentDto.getGrade());
         optional.get().setAddress(studentDto.getAddress());
+        optional.get().setStatus(studentDto.getStatus());
         optional.get().setRoom(optionalRoom.get());
         studentRepository.save(optional.get());
         StudentRespondDto dto = ObjectMapperUtils.toDto(optional.get(), StudentRespondDto.class);

@@ -92,6 +92,7 @@ public class BusinessServiceImpl implements BusinessService {
         optional.get().setServiceCode(businessDto.getServiceCode());
         optional.get().setServiceName(businessDto.getServiceName());
         optional.get().setAmount(business.getAmount());
+        optional.get().setStatus(business.getStatus());
         bussinessRepository.save(optional.get());
         BusinessDto dto = ObjectMapperUtils.toDto(optional.get(), BusinessDto.class);
         return dto;
