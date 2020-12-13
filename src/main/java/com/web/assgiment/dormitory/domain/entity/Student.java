@@ -32,13 +32,7 @@ public class Student implements Serializable {
     private String address;
     @Column(name = "status")
     private Integer status;
-    @OneToMany(targetEntity = Visitor.class, cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, mappedBy = "student")
-    private Set<Visitor> visitorSet;
-    @ManyToOne(targetEntity = Room.class)
-    @JoinColumn(name = "room_id")
-    @JsonIgnore
-    private Room room;
+
     @OneToMany(targetEntity = Ticket.class, cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, mappedBy = "student")
     private Set<Ticket> ticketSet;
@@ -48,4 +42,12 @@ public class Student implements Serializable {
     @OneToMany(targetEntity = Bill.class, cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, mappedBy = "student")
     private Set<Bill> billSet;
+    @OneToMany(targetEntity = Visitor.class, cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, mappedBy = "student")
+    private Set<Visitor> visitorSet;
+
+    @ManyToOne(targetEntity = Room.class)
+    @JoinColumn(name = "room_id")
+    @JsonIgnore
+    private Room room;
 }

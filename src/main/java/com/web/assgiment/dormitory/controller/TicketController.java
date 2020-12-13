@@ -31,19 +31,19 @@ public class TicketController {
         ticketService.saveTicketCheckOut(studentId);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.update")));
     }
-
+        //3
     @PutMapping("/delete-ticket")
     public ResponseEntity<ResponseData> deleteTicket(@RequestBody List<DeleteDto> listId) throws UserValidateException {
         List<TicketDto> dtos = ticketService.deleteTicket(listId);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.delete"), dtos));
     }
-
+        //1
     @PostMapping("/register-ticket-monthly")
     public ResponseEntity<ResponseData> registerTicketMonthly(@RequestParam("studentId") Integer studentId) throws UserValidateException {
         ticketService.registerTicketMonthly(studentId);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.create")));
     }
-
+        //2
     @GetMapping("")
     public ResponseEntity<ResponseData> getAllTickets(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
                                                       @RequestParam(value = "limit", defaultValue = "10") Integer limit) throws UserValidateException {

@@ -33,7 +33,7 @@ public class StatisticController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ResponseData> getAllBill(@RequestParam Integer studentId) {
+    public ResponseEntity<ResponseData> getAllBill(@RequestParam(required = false) Integer studentId) {
         List<BillDto> billList = billService.getAllBill(studentId);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"), billList));
     }

@@ -52,15 +52,16 @@ public class BillRepositoryCustomImpl implements BillRepositoryCustom {
     @Override
     public List<BillDto> getAllBill(Integer studentId) {
         StringBuilder sql = new StringBuilder();
+        Query query = null;
         sql.append("select bill.id,stu_code,total_room,total_service,total_bill,export_date from bill ");
         sql.append("join student on bill.student_id=student.id ");
         if (studentId == null) {
-            sql.append("");
+            query = entityManager.createNativeQuery(sql.toString());
         } else {
             sql.append("where student_id = :studentId");
+            query = entityManager.createNativeQuery(sql.toString());
+            query.setParameter("studentId", studentId);
         }
-        Query query = entityManager.createNativeQuery(sql.toString());
-        query.setParameter("studentId", studentId);
         List<Object[]> bills = query.getResultList();
         List<BillDto> billDtoList = new ArrayList<>();
         for (Object[] bill : bills) {
@@ -79,7 +80,8 @@ public class BillRepositoryCustomImpl implements BillRepositoryCustom {
     @Override
     public List<BillServiceDto> getAllService(BillServiceRequestDto dto) {
         StringBuilder sql = new StringBuilder();
-        sql.append("select stu_code,service_code,name,sum(amount) as total from student_service ss ");
+        sql.append("select stu_code,service_code,name,start_used,end_used,(amount) as total ");
+        sql.append("from student_service ss ");
         sql.append("join service s on ss.service_id=s.id ");
         sql.append("join student st on ss.student_id = st.id ");
         sql.append("where start_used >= :startDate and end_used <= :endDate group by service_code");
@@ -93,7 +95,9 @@ public class BillRepositoryCustomImpl implements BillRepositoryCustom {
             serviceDto.setStudentCode((String) o[0]);
             serviceDto.setServiceCode((String) o[1]);
             serviceDto.setServiceName((String) o[2]);
-            serviceDto.setTotal((Double) o[3]);
+            serviceDto.setStartUsed((Date)o[3]);
+            serviceDto.setEndUsed((Date)o[4]);
+            serviceDto.setTotal((Double) o[5]);
             dtos.add(serviceDto);
         }
         return dtos;
