@@ -31,17 +31,8 @@ public class StatisticController {
         billService.processBill(dto);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.create")));
     }
-
-//    @GetMapping("")
-//    public ResponseEntity<ResponseData> getAllBill(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
-//                                                   @RequestParam(value = "limit", defaultValue = "10") Integer limit) throws UserValidateException {
-//        PageDto pageDto = new PageDto(offset, limit);
-//        Map<String, Object> map = billService.getAllBill(pageDto);
-//        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"), map));
-//    }
-
     @GetMapping("")
-    public ResponseEntity<ResponseData> getAllBill() throws UserValidateException {
+    public ResponseEntity<ResponseData> getAllBill() {
         List<BillDto> billList = billService.getAllBill();
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"), billList));
     }

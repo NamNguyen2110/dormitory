@@ -2,6 +2,7 @@ package com.web.assgiment.dormitory.service.impl;
 
 import com.web.assgiment.dormitory.common.utils.CommonUtils;
 import com.web.assgiment.dormitory.common.validator.group.RegexContant;
+import com.web.assgiment.dormitory.domain.dto.DeleteDto;
 import com.web.assgiment.dormitory.domain.dto.request.UsedDto;
 import com.web.assgiment.dormitory.domain.entity.Business;
 import com.web.assgiment.dormitory.domain.dto.BusinessDto;
@@ -59,10 +60,10 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public List<BusinessDto> deleteService(List<Integer> ids) throws UserValidateException {
+    public List<BusinessDto> deleteService(List<DeleteDto> id) throws UserValidateException {
         List<Business> businessList = new ArrayList<>();
-        for (Integer id : ids) {
-            Optional<Business> optional = bussinessRepository.findById(id);
+        for (DeleteDto business : id) {
+            Optional<Business> optional = bussinessRepository.findById(business.getId());
             if (optional.isEmpty()) {
                 throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
             }

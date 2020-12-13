@@ -1,5 +1,6 @@
 package com.web.assgiment.dormitory.service;
 
+import com.web.assgiment.dormitory.domain.dto.DeleteDto;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.RoomDto;
 import com.web.assgiment.dormitory.domain.dto.request.RoomRespondDto;
@@ -13,7 +14,7 @@ public interface RoomService {
 
     Map<String, Object> getAllRoom(PageDto pageDto) throws UserValidateException;
 
-    List<RoomDto> deleteRoom(List<Integer> id) throws UserValidateException;
+    List<RoomDto> deleteRoom(List<DeleteDto> id) throws UserValidateException;
 
     RoomDto updateOneRoom(RoomDto roomDto) throws UserValidateException, BadRequestException;
 

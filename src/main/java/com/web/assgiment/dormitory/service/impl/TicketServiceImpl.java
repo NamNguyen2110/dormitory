@@ -1,7 +1,9 @@
 package com.web.assgiment.dormitory.service.impl;
 
+import com.web.assgiment.dormitory.domain.dto.DeleteDto;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.TicketDto;
+import com.web.assgiment.dormitory.domain.dto.TicketDto1;
 import com.web.assgiment.dormitory.domain.entity.Student;
 import com.web.assgiment.dormitory.domain.entity.Ticket;
 import com.web.assgiment.dormitory.exception.UserValidateException;
@@ -30,7 +32,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     @Transactional(rollbackFor = {SQLException.class})
-    public void saveTicketCheckIn(Integer studentId) throws UserValidateException {
+    public TicketDto1 saveTicketCheckIn(Integer studentId) throws UserValidateException {
         Optional<Student> optional = studentRepository.findById(studentId);
         if (optional.isEmpty()) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
@@ -41,25 +43,28 @@ public class TicketServiceImpl implements TicketService {
         ticket.setStudent(optional.get());
         ticket.setStatus(1);
         ticketRepository.save(ticket);
+        TicketDto1 dto1 = ObjectMapperUtils.toDto(ticket, TicketDto1.class);
+        return dto1;
     }
 
     @Override
     public void saveTicketCheckOut(Integer studentId) throws UserValidateException {
-        Optional<Ticket> optionalTicket = ticketRepository.findById(studentId);
+        Optional<Student> optionalTicket = studentRepository.findById(studentId);
         if (optionalTicket.isEmpty()) {
             throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
         }
-        optionalTicket.get().setCharges(3000);
-        optionalTicket.get().setStatus(0);
-        optionalTicket.get().setCheckOut(new Date());
-        ticketRepository.save(optionalTicket.get());
+
+//        optionalTicket.get().setCharges(3000);
+//        optionalTicket.get().setStatus(0);
+//        optionalTicket.get().setCheckOut(new Date());
+//        ticketRepository.save(optionalTicket.get());
     }
 
     @Override
-    public List<TicketDto> deleteTicket(List<Integer> ids) throws UserValidateException {
+    public List<TicketDto> deleteTicket(List<DeleteDto> id) throws UserValidateException {
         List<Ticket> tickets = new ArrayList<>();
-        for (Integer ticketId : ids) {
-            Optional<Ticket> optional = ticketRepository.findById(ticketId);
+        for (DeleteDto ticket : id) {
+            Optional<Ticket> optional = ticketRepository.findById(ticket.getId());
             if (optional.isEmpty()) {
                 throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
             }

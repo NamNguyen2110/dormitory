@@ -2,12 +2,14 @@ package com.web.assgiment.dormitory.controller;
 
 import com.web.assgiment.dormitory.common.respond.ResponseData;
 import com.web.assgiment.dormitory.domain.dto.BusinessDto;
+import com.web.assgiment.dormitory.domain.dto.DeleteDto;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.request.BusinessRespondDto;
 import com.web.assgiment.dormitory.domain.dto.request.UsedDto;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.service.BusinessService;
 import com.web.assgiment.dormitory.utils.MessageBundle;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping(value = "v1/api/service")
-@ApiOperation("This api means service cause naming for service duplicate,so set service by BusinessController actually ServiceController")
+@Api("This api means service cause naming for service duplicate,so set service by BusinessController actually ServiceController")
 public class BusinessController {
     @Autowired
     private BusinessService businessService;
@@ -37,7 +39,7 @@ public class BusinessController {
     }
 
     @PutMapping("/delete-service")
-    public ResponseEntity<ResponseData> deleteService(@RequestBody List<Integer> listId) throws UserValidateException {
+    public ResponseEntity<ResponseData> deleteService(@RequestBody List<DeleteDto> listId) throws UserValidateException {
         List<BusinessDto> dtos = businessService.deleteService(listId);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.delete"), dtos));
     }

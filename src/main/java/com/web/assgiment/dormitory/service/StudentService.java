@@ -1,5 +1,6 @@
 package com.web.assgiment.dormitory.service;
 
+import com.web.assgiment.dormitory.domain.dto.DeleteDto;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.StudentDto;
 import com.web.assgiment.dormitory.domain.dto.request.StudentRespondDto;
@@ -14,7 +15,7 @@ public interface StudentService {
 
     Map<String, Object> getAllStudent(PageDto pageDto) throws UserValidateException;
 
-    List<StudentRespondDto> deleteStudent(List<Integer> listId) throws UserValidateException;
+    List<StudentRespondDto> deleteStudent(List<DeleteDto> id) throws UserValidateException;
 
     StudentRespondDto updateStudent(StudentDto studentDto) throws UserValidateException, ParseException;
 

@@ -1,6 +1,7 @@
 package com.web.assgiment.dormitory.service.impl;
 
 import com.web.assgiment.dormitory.common.validator.group.RegexContant;
+import com.web.assgiment.dormitory.domain.dto.DeleteDto;
 import com.web.assgiment.dormitory.domain.entity.Room;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.RoomDto;
@@ -50,10 +51,10 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<RoomDto> deleteRoom(List<Integer> id) throws UserValidateException {
+    public List<RoomDto> deleteRoom(List<DeleteDto> id) throws UserValidateException {
         List<RoomDto> dtos = new ArrayList<>();
-        for (Integer roomCode : id) {
-            Optional<Room> optional = roomRepository.findById(roomCode);
+        for (DeleteDto room : id) {
+            Optional<Room> optional = roomRepository.findById(room.getId());
             if (optional.isEmpty()) {
                 throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
             }

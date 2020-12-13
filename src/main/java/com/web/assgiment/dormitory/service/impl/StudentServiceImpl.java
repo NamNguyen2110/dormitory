@@ -2,6 +2,7 @@ package com.web.assgiment.dormitory.service.impl;
 
 import com.web.assgiment.dormitory.common.utils.CommonUtils;
 import com.web.assgiment.dormitory.common.validator.group.RegexContant;
+import com.web.assgiment.dormitory.domain.dto.DeleteDto;
 import com.web.assgiment.dormitory.domain.entity.Room;
 import com.web.assgiment.dormitory.domain.entity.Student;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
@@ -68,10 +69,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentRespondDto> deleteStudent(List<Integer> id) throws UserValidateException {
+    public List<StudentRespondDto> deleteStudent(List<DeleteDto> id) throws UserValidateException {
         List<StudentRespondDto> dtos = new ArrayList<>();
-        for (Integer studentId : id) {
-            Optional<Student> optional = studentRepository.findById(studentId);
+        for (DeleteDto student : id) {
+            Optional<Student> optional = studentRepository.findById(student.getId());
             if (optional.isEmpty()) {
                 throw new UserValidateException(MessageBundle.getMessage("dormitory.message.system.target"));
             }

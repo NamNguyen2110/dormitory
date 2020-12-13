@@ -1,6 +1,7 @@
 package com.web.assgiment.dormitory.service;
 
 import com.web.assgiment.dormitory.domain.dto.BusinessDto;
+import com.web.assgiment.dormitory.domain.dto.DeleteDto;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.request.BusinessRespondDto;
 import com.web.assgiment.dormitory.domain.dto.request.UsedDto;
@@ -13,7 +14,7 @@ public interface BusinessService {
 
     Map<String, Object> getAllService(PageDto pageDto);
 
-    List<BusinessDto> deleteService(List<Integer> id) throws UserValidateException;
+    List<BusinessDto> deleteService(List<DeleteDto> id) throws UserValidateException;
 
     BusinessDto updateService(BusinessDto businessDto) throws UserValidateException;
 

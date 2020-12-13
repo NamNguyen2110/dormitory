@@ -1,6 +1,7 @@
 package com.web.assgiment.dormitory.controller;
 
 import com.web.assgiment.dormitory.common.respond.ResponseData;
+import com.web.assgiment.dormitory.domain.dto.DeleteDto;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.StudentDto;
 import com.web.assgiment.dormitory.domain.dto.request.StudentRespondDto;
@@ -36,8 +37,8 @@ public class StudentController {
     }
 
     @PutMapping("/delete-student")
-    public ResponseEntity<ResponseData> deleteStudent(@RequestBody List<Integer> id) throws UserValidateException {
-        List<StudentRespondDto> dtos = studentService.deleteStudent(id);
+    public ResponseEntity<ResponseData> deleteStudent(@RequestBody List<DeleteDto> listId) throws UserValidateException {
+        List<StudentRespondDto> dtos = studentService.deleteStudent(listId);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.delete"), dtos));
     }
 

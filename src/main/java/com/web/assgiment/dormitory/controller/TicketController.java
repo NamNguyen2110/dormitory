@@ -1,8 +1,10 @@
 package com.web.assgiment.dormitory.controller;
 
 import com.web.assgiment.dormitory.common.respond.ResponseData;
+import com.web.assgiment.dormitory.domain.dto.DeleteDto;
 import com.web.assgiment.dormitory.domain.dto.PageDto;
 import com.web.assgiment.dormitory.domain.dto.TicketDto;
+import com.web.assgiment.dormitory.domain.dto.TicketDto1;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 import com.web.assgiment.dormitory.service.TicketService;
 import com.web.assgiment.dormitory.utils.MessageBundle;
@@ -20,7 +22,7 @@ public class TicketController {
 
     @PostMapping("/check-in")
     public ResponseEntity<ResponseData> checkInTicketDaily(@RequestParam("studentId") Integer studentId) throws UserValidateException {
-        ticketService.saveTicketCheckIn(studentId);
+        TicketDto1 dto1 = ticketService.saveTicketCheckIn(studentId);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.create")));
     }
 
@@ -31,8 +33,8 @@ public class TicketController {
     }
 
     @PutMapping("/delete-ticket")
-    public ResponseEntity<ResponseData> deleteTicket(@RequestBody List<Integer> ids) throws UserValidateException {
-        List<TicketDto> dtos = ticketService.deleteTicket(ids);
+    public ResponseEntity<ResponseData> deleteTicket(@RequestBody List<DeleteDto> listId) throws UserValidateException {
+        List<TicketDto> dtos = ticketService.deleteTicket(listId);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.delete"), dtos));
     }
 
@@ -41,9 +43,10 @@ public class TicketController {
         ticketService.registerTicketMonthly(studentId);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.create")));
     }
+
     @GetMapping("")
     public ResponseEntity<ResponseData> getAllTickets(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
-                                                       @RequestParam(value = "limit", defaultValue = "10") Integer limit) throws UserValidateException {
+                                                      @RequestParam(value = "limit", defaultValue = "10") Integer limit) throws UserValidateException {
         PageDto pageDto = new PageDto(offset, limit);
         Map<String, Object> map = ticketService.getAllTicket(pageDto);
         return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"), map));
