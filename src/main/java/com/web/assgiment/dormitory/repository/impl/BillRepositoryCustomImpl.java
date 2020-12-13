@@ -80,7 +80,7 @@ public class BillRepositoryCustomImpl implements BillRepositoryCustom {
     @Override
     public List<BillServiceDto> getAllService(BillServiceRequestDto dto) {
         StringBuilder sql = new StringBuilder();
-        sql.append("select stu_code,service_code,name,start_used,end_used,(amount) as total ");
+        sql.append("select stu_code,service_code,name,start_used,end_used,sum(amount) as total ");
         sql.append("from student_service ss ");
         sql.append("join service s on ss.service_id=s.id ");
         sql.append("join student st on ss.student_id = st.id ");
