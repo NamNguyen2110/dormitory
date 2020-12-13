@@ -1,6 +1,5 @@
 package com.web.assgiment.dormitory.service.impl;
 
-import com.web.assgiment.dormitory.domain.dto.UserDetailsImpl;
 import com.web.assgiment.dormitory.domain.entity.User;
 import com.web.assgiment.dormitory.repository.UserRepository;
 import com.web.assgiment.dormitory.utils.MessageBundle;

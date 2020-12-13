@@ -14,18 +14,5 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "v1/api/user")
 public class UserController {
-    @Autowired
-    private UserService userService;
 
-    @PostMapping("/register-user")
-    public ResponseEntity<ResponseData> registerUser(@RequestBody RegisterUserDto userDto) throws BadRequestException, UserValidateException {
-        userService.registerAccount(userDto);
-        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.create")));
-    }
-
-    @GetMapping("/login-user")
-    public ResponseEntity<ResponseData> loginUser(@RequestBody LoginUserDto userDto) {
-        String accessToken = userService.generateToken(userDto);
-        return ResponseEntity.ok(ResponseData.ofSuccess(MessageBundle.getMessage("dormitory.message.system.get"), accessToken));
-    }
 }

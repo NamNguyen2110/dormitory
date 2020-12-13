@@ -6,7 +6,5 @@ import com.web.assgiment.dormitory.exception.BadRequestException;
 import com.web.assgiment.dormitory.exception.UserValidateException;
 
 public interface UserService {
-    void registerAccount(RegisterUserDto userDto) throws UserValidateException, BadRequestException;
 
-    String generateToken(LoginUserDto userDto);
 }
